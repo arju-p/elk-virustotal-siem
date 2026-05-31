@@ -1,0 +1,26 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/syslog
+      - /var/log/auth.log
+    fields:
+      log_source: linux_host
+    fields_under_root: true
+
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/*.log
+    fields:
+      log_source: linux_host
+    fields_under_root: true
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+output.logstash:
+  hosts: ["logstash:5044"]
+
+logging.level: info
